@@ -71,6 +71,7 @@ UrgNode::UrgNode(const rclcpp::NodeOptions & node_options)
   skip_(0),
   default_user_latency_(0.0),
   laser_frame_id_("laser"),
+  scan_topic_("scan"),
   service_yield_(true)
 {
   (void) synchronize_time_;
@@ -83,6 +84,7 @@ void UrgNode::initSetup()
   ip_address_ = this->declare_parameter<std::string>("ip_address", ip_address_);
   ip_port_ = this->declare_parameter<int>("ip_port", ip_port_);
   laser_frame_id_ = this->declare_parameter<std::string>("laser_frame_id", laser_frame_id_);
+  scan_topic_ = this->declare_parameter<std::string>("scan_topic", scan_topic_);
   serial_port_ = this->declare_parameter<std::string>("serial_port", serial_port_);
   serial_baud_ = this->declare_parameter<int>("serial_baud", serial_baud_);
   calibrate_time_ = this->declare_parameter<bool>("calibrate_time", calibrate_time_);
@@ -109,7 +111,7 @@ void UrgNode::initSetup()
     echoes_pub_ =
       std::make_unique<laser_proc::LaserPublisher>(this->get_node_topics_interface(), 20);
   } else {
-    laser_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>("scan", 20);
+    laser_pub_ = this->create_publisher<sensor_msgs::msg::LaserScan>(scan_topic_, 20);
   }
 
   status_service_ = this->create_service<std_srvs::srv::Trigger>(

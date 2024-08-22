@@ -6,6 +6,7 @@ urg_node:
     serial_port: "/dev/ttyACM0"
     serial_baud: 115200
     laser_frame_id: "laser"
+    scan_topic: "scan"
     calibrate_time: false
     default_user_latency: 0.0
     diagnostics_tolerance: 0.05

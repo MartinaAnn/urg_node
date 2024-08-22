@@ -162,6 +162,8 @@ private:
   /** The laser tf frame id. */
   std::string laser_frame_id_;
 
+  std::string scan_topic_;
+
   volatile bool service_yield_;
 
   rclcpp::Publisher<sensor_msgs::msg::LaserScan>::SharedPtr laser_pub_;
